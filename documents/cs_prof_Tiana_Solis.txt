@@ -1,0 +1,43 @@
+Professor: Tiana Solis
+Department: Computer Science
+Overall Rating: 2.9/5
+University: Florida International University
+Source: Rate My Professors
+URL: https://www.ratemyprofessors.com/professor/2024225
+
+---
+
+REVIEW 1
+Quality: 4.0
+Difficulty: 1.0
+Course: CGS1920
+Review: Never met the professor since this was an online course but judging by the emails and announcements, she seemed nice. Homework wasn't too much and the reading was easy to get through. It's enough work from what you expect from a one credit course.
+---
+
+REVIEW 2
+Quality: 4.0
+Difficulty: 1.0
+Course: CGS1920
+Review: Didn't interact with professor at all since this was an online class but from my interactions with her through announcements and emails, she seemed nice. Homework wasn't too bad to deal with. It's enough work that you can expect from a one credit course.
+---
+
+REVIEW 3
+Quality: 1.0
+Difficulty: 1.0
+Course: CGS3767
+Review: Financial Aid covered the cost entirely and yet I still feel ripped off. A whole grand just for the professor to prescribe Zybooks and LinkedIn Learning videos. Hardly anything practical. Nothing was learned. It was easy as it gets though, so I suppose if you want to take this class without really doing it, choose this professor. Just such a waste.
+---
+
+REVIEW 4
+Quality: 5.0
+Difficulty: 1.0
+Course: CEN3721
+Review: Perfect professor, take her! Easy grader just do everything on time and you will get A.
+---
+
+REVIEW 5
+Quality: 3.0
+Difficulty: 4.0
+Course: COP1000
+Review: The professor mainly lectured and had a strong accent, which made understanding harder at times. She encouraged participation, but most students weren't engaged. TAs were more helpful overall. Extra credit for SPOTS was a plus, but the class felt disconnected since many weren't paying attention. She meant well though and tried her best.
+---

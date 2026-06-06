@@ -1,0 +1,40 @@
+Professor: Vladimir Posdin
+Department: Computer Engineering
+Overall Rating: 2.0/5
+University: Florida International University
+Source: Rate My Professors
+URL: https://www.ratemyprofessors.com/professor/2726303
+
+---
+
+REVIEW 1
+Quality: 1.0
+Difficulty: 5.0
+Course: EEL3110C
+Review: Very unorganized class. Assignments not clearly defined of how he wants them. Labs are awful and take 3+ hours due to lack of structure. Uploads blank slides for lectures so useless if you miss a class.
+---
+REVIEW 2
+Quality: 4.0
+Difficulty: 4.0
+Course: EEL3110C
+Review: The workload is too much. Trying to keep up with it was overwhelming; there is always something to submit. I don't recommend taking this with a busy schedule, but the professor isn't that bad. Reading the chapters before the lecture is key. The lectures could be so confusing until I asked questions. He will actually explain well once you question.
+---
+REVIEW 3
+Quality: 2.0
+Difficulty: 4.0
+Course: EEL3110C
+Review: He is a good professor, his class is just not for people with no knowledge of circuits because is very fast paced and gets very complicated very quickly.
+---
+REVIEW 4
+Quality: 1.0
+Difficulty: 5.0
+Course: EEE5543
+Review: Extremely difficult, he does not teach, lecture and notes are not helpful, has zoom class meetings weekly during times that most of us are working at our jobs. He gives a test for his syllabus. The examples he shows for modules are not even close to the questions he assigns and is not clear when he is trying to teach.
+
+---
+REVIEW 5
+Quality: 1.0
+Difficulty: 5.0
+Course: EEE5543
+Review: Avoid at all cost. He is rude and does not teach the material well. His course is not a beginner course but he assumes you should already know it. His midterm did not make any sense and he did not show up to proctor it on Saturday forcing all of us to retake it on a later date. By far, the worst professor/teacher I have ever met.
+---

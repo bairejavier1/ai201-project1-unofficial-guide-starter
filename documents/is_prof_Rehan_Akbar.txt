@@ -1,0 +1,43 @@
+Professor: Rehan Akbar
+Department: Information Science
+Overall Rating: 4.2/5
+University: Florida International University
+Source: Rate My Professors
+URL: https://www.ratemyprofessors.com/professor/2943512
+
+---
+
+REVIEW 1
+Quality: 1.0
+Difficulty: 3.0
+Course: CEN4010
+Review: AVOID unless you're comfortable memorizing slides word for word. Tests are based on PowerPoints, and you're expected to remember very specific details. The course content feels outdated and isn't what you'd expect from a SWE class. The professor rarely responds to emails and is unclear and inconsistent with grading. Feedback is not provided.
+---
+
+REVIEW 2
+Quality: 2.0
+Difficulty: 4.0
+Course: CEN4010
+Review: Classes are lecture only, with the occasional Kahoot review. Expect long term group projects. Graded assignments fairly leniently, however he took a long time to grade, multiple months. The exams are very difficult, with obscure definitions and applications; expect everything to show up. Average on exams hovered around C to low B. Multiple choice.
+---
+
+REVIEW 3
+Quality: 2.0
+Difficulty: 3.0
+Course: CEN4010
+Review: He's not good or bad, but just okay. I took him because the other professors for this course were either unavailable or worse than him. Passing the class is not a problem so I wouldn't worry much, but his class was boring because all he does is read off of powerpoint slides. Just do all the assignments and you will just fine.
+---
+
+REVIEW 4
+Quality: 4.0
+Difficulty: 4.0
+Course: CEN4072
+Review: Tests were difficult, but professor offered plenty of other assignments to bring grade up. Just attend class before the day of the test for review and you should be fine.
+---
+
+REVIEW 5
+Quality: 1.0
+Difficulty: 3.0
+Course: CEN4010
+Review: Professor Akbar doesnt really seem like he gives much thought to his class, he reads off the powerpoints for the majority of class, assigns tedious assignments which are graded harshly. For my final project I submitted a file which he couldnt open, he left me a comment and I immediately fixed, sent him an email, to which he never replied.
+---

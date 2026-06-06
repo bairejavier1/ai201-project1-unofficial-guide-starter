@@ -1,0 +1,43 @@
+Professor: Ning Xie
+Department: Computer Science
+Overall Rating: 4.0/5
+University: Florida International University
+Source: Rate My Professors
+URL: https://www.ratemyprofessors.com/professor/2070140
+
+---
+
+REVIEW 1
+Quality: 3.0
+Difficulty: 3.0
+Course: COT3100
+Review: The professor was kind but his videos didn't help out with learning the material and he was really explaining why it's like that. Which didn't help with the homework at all. Had to use AI to help me out with the homework and study for the exams. The exams can be a bit hard if you don't practice the homework problems. Do the extra credit quizzes!
+---
+
+REVIEW 2
+Quality: 1.0
+Difficulty: 4.0
+Course: COT3100
+Review: I don't have anything against him personally, but honestly it has been impossible to pay attention to a single lecture. He is very old, which isn't bad, but his voice barely comes out, he has zero energy. No class material, almost 3 hour long lectures in a very dull room. For discrete structures, I sincerely do not recommend him.
+---
+
+REVIEW 3
+Quality: 5.0
+Difficulty: 4.0
+Course: COT3100
+Review: Nice professor. Listens to questions and participation. Very lecture heavy, hoping it improves for future classes as the class was so long but the lectures were great just long. Recommend him but hope he splits the class to be twice a week for less time each.
+---
+
+REVIEW 4
+Quality: 2.0
+Difficulty: 5.0
+Course: COT3100
+Review: He tends to be rude if you don't know things, and he makes it difficult to ask questions because of how intimidating he is. He clearly knows the material, but his lectures tend to be incomprehensible at times.
+---
+
+REVIEW 5
+Quality: 5.0
+Difficulty: 3.0
+Course: COP1000
+Review: Professor Xie is an extremely fair professor and is committed to get you the best grade possible. You have to put maximum EFFORT, do your homework, and quizzes. He is generous when he sees a problem that is worded incorrectly or wasn't covered, he handles it accordingly. I would take him again.
+---
