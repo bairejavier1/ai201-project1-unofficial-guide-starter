@@ -113,6 +113,10 @@ This system covers student-generated reviews of professors at Florida Internatio
 │   Source display     │    + sources display
 └─────────────────────┘
 
+Mermaid Generated Diagram:|
+
+![Pipeline Architecture](images/architecture.png)
+
 ---
 
 ## AI Tool Plan
