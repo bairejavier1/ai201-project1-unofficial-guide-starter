@@ -72,46 +72,48 @@ This system covers student-generated reviews of professors at Florida Internatio
 
 ## Architecture
 
+```
 ┌─────────────────────┐
-│   Document Ingestion │  ← Python (ingest.py)
-│   Load .txt files    │    os.listdir + open()
-│   Clean text         │
-└────────┬────────────┘
-│
-▼
+│  Document Ingestion  │  <- Python (ingest.py)
+│  Load .txt files     │     os.listdir + open()
+│  Clean text          │
+└──────────┬──────────┘
+           │
+           v
 ┌─────────────────────┐
-│   Chunking           │  ← Python (chunk.py)
-│   500 char chunks    │    Custom sliding window
-│   50 char overlap    │
-└────────┬────────────┘
-│
-▼
+│  Chunking            │  <- Python (chunk.py)
+│  500 char chunks     │     Custom sliding window
+│  50 char overlap     │
+└──────────┬──────────┘
+           │
+           v
 ┌─────────────────────┐
-│  Embedding +         │  ← sentence-transformers
-│  Vector Store        │    all-MiniLM-L6-v2
-│                      │    ChromaDB (embed.py)
-└────────┬────────────┘
-│
-▼
+│  Embedding +         │  <- sentence-transformers
+│  Vector Store        │     all-MiniLM-L6-v2
+│                      │     ChromaDB (embed.py)
+└──────────┬──────────┘
+           │
+           v
 ┌─────────────────────┐
-│   Retrieval          │  ← ChromaDB query (retrieve.py)
-│   Top-k = 5          │    Semantic similarity search
-│   + source metadata  │
-└────────┬────────────┘
-│
-▼
+│  Retrieval           │  <- ChromaDB query (retrieve.py)
+│  Top-k = 5           │     Semantic similarity search
+│  + source metadata   │
+└──────────┬──────────┘
+           │
+           v
 ┌─────────────────────┐
-│   Generation         │  ← Groq API (generate.py)
-│   llama-3.3-70b      │    Grounded prompt template
-│   Grounded response  │    Source attribution
-└────────┬────────────┘
-│
-▼
+│  Generation          │  <- Groq API (generate.py)
+│  llama-3.3-70b       │     Grounded prompt template
+│  Grounded response   │     Source attribution
+└──────────┬──────────┘
+           │
+           v
 ┌─────────────────────┐
-│   Query Interface    │  ← Gradio (app.py)
-│   Web UI             │    Text input + answer output
-│   Source display     │    + sources display
+│  Query Interface     │  <- Gradio (app.py)
+│  Web UI              │     Text input + answer output
+│  Source display      │     + sources display
 └─────────────────────┘
+```
 
 Mermaid Generated Diagram:|
 
