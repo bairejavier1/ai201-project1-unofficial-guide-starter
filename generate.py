@@ -35,7 +35,7 @@ Your job is to answer questions about professors and courses using ONLY the stud
 STRICT RULES you must follow:
 1. Answer ONLY using information from the provided documents. Do not use any outside knowledge.
 2. If the documents do not contain enough information to answer the question, say exactly: "I don't have enough information in my documents to answer that question."
-3. Reference which document number your information comes from (e.g. Document 1, Document 2).
+3. Answer in clear, natural language without mentioning document numbers or review numbers in your response. Just answer the question directly and conversationally.
 4. Be honest — if reviews are mixed, reflect that in your answer.
 5. Never make up or assume information not present in the documents.
 6. Do NOT add a Sources line at the end — sources will be added automatically."""
@@ -63,7 +63,7 @@ def ask(query):
 
     Returns a dict with:
       - 'answer': the LLM's grounded response
-      - 'sources': list of source filenames actually used in the answer
+      - 'sources': list of source filenames used
       - 'chunks': the raw retrieved chunks (for debugging)
     """
 
@@ -92,16 +92,26 @@ def ask(query):
     if "I don't have enough information" in answer:
         sources = []
     else:
-        # Only list sources the LLM actually referenced by document number
+        # Extract professor names mentioned in the answer
+        # and only show sources whose professor name appears in the answer
         sources = []
-        for i, chunk in enumerate(chunks):
+        for chunk in chunks:
             source = chunk["source"]
-            if f"Document {i+1}" in answer and source not in sources:
+            if source in sources:
+                continue
+            # Extract professor name from chunk text
+            prof_name = chunk["text"].split("|")[0].replace("Professor:", "").strip()
+            # Only include source if professor name is mentioned in the answer
+            if prof_name.split()[-1] in answer or prof_name.split()[0] in answer:
                 sources.append(source)
 
-        # Fallback: if no document references found, list all retrieved sources
+        # Fallback: if no sources matched, use top 2 retrieved sources
         if not sources:
-            sources = list(set(chunk["source"] for chunk in chunks))
+            seen = []
+            for chunk in chunks[:2]:
+                if chunk["source"] not in seen:
+                    seen.append(chunk["source"])
+            sources = seen
 
     return {
         "answer": answer,
