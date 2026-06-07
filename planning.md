@@ -9,7 +9,7 @@
 
 ## Domain
 
-This system covers student-generated reviews of professors at Florida International University (FIU) across three departments: Computer Science, Computer Engineering, and Information Systems. This knowledge is valuable because official university channels — course catalogs, syllabi, and department websites — only describe what a course covers, not what it's actually like to take it. Rate My Professors captures honest, first-hand student experiences including teaching quality, exam difficulty, grading fairness, and workload — information that is impossible to find through official channels and critical for students making course registration decisions.
+This system covers student-generated reviews of professors at Florida International University (FIU) across three departments: Computer Science, Computer Engineering, and Information Systems. This knowledge is valuable because official university channels — course catalogs, syllabus, and department websites — only describe what a course covers, not what it's actually like to take it. Rate My Professors captures honest, first-hand student experiences including teaching quality, exam difficulty, grading fairness, and workload — information that is impossible to find through official channels and critical for students making course registration decisions.
 
 ---
 
@@ -32,11 +32,13 @@ This system covers student-generated reviews of professors at Florida Internatio
 
 ## Chunking Strategy
 
-**Chunk size:** 500 characters
+**Chunk size:** 400 characters
 
 **Overlap:** 50 characters
 
-**Reasoning:** Each document consists of short, individual student reviews — typically 2 to 5 sentences long. A 500-character chunk is large enough to contain one complete review with its metadata (Quality, Difficulty, Course), which is the natural unit of meaning in this corpus. Going smaller (e.g. 200 characters) would split individual reviews mid-sentence, destroying the context needed to understand the student's opinion. Going larger (e.g. 1000+ characters) would merge multiple reviews into one chunk, diluting the signal when a query is looking for a specific type of feedback. A 50-character overlap ensures that if a review happens to straddle a chunk boundary, the key content still appears in at least one retrievable chunk.
+**Reasoning:** Each document consists of short, individual student reviews — typically 2 to 5 sentences long. After testing, 500-character chunks produced only 49 chunks total across 10 documents, which is below the recommended minimum of 50. Reducing to 400 characters produced 62 chunks, giving the retrieval system more granular units to match against. A 400-character chunk is still large enough to contain one complete review with its metadata (Quality, Difficulty, Course). A 50-character overlap ensures that reviews straddling a chunk boundary still appear fully in at least one retrievable chunk.
+
+**Final chunk count:** 62
 
 ---
 
