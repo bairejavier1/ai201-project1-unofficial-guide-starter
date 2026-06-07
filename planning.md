@@ -34,20 +34,9 @@ This system covers student-generated reviews of professors at Florida Internatio
 
 **Chunk size:** One complete review per chunk
 
-**Overlap:** None — natural review boundaries are used instead of 
-a sliding window. Each REVIEW block in the source document is 
-extracted as its own chunk, so no overlap is needed because 
-reviews don't share content.
+**Overlap:** None — natural review boundaries are used instead of a sliding window. Each REVIEW block in the source document is extracted as its own chunk, so no overlap is needed because reviews do not share content.
 
-**Reasoning:** Initially a 400-character sliding window with 
-50-character overlap was planned, producing 62 chunks. After 
-testing, retrieval quality was poor because the professor header 
-block consumed most of each chunk. The strategy was changed to 
-extract each individual review as its own chunk using the REVIEW N 
-markers as natural split points, with a short professor context 
-line (name, department, overall rating) prepended to every chunk. 
-This produces cleaner, more semantically meaningful chunks that 
-retrieve much more accurately.
+**Reasoning:** Initially a 400-character sliding window with 50-character overlap was planned, producing 62 chunks. After testing, retrieval quality was poor because the professor header block consumed most of each chunk. The strategy was changed to extract each individual review as its own chunk using the REVIEW N markers as natural split points, with a short professor context line (name, department, overall rating, review number) prepended to every chunk. This produces cleaner, more semantically meaningful chunks that retrieve much more accurately.
 
 **Final chunk count:** 50 (5 reviews × 10 professors)
 
@@ -57,7 +46,7 @@ retrieve much more accurately.
 
 **Embedding model:** all-MiniLM-L6-v2 via sentence-transformers (runs locally, no API key required)
 
-**Top-k:** 5
+**Top-k:** 5 for standard queries. For broad cross-department queries (e.g. "best professor among all three departments"), the system retrieves up to 50 chunks and then filters to the top 2 most relevant positive reviews per department, returning up to 6 chunks total. For specific professor or department queries, the system retrieves up to 50 chunks and filters down to the top 5 from the matching source.
 
 **Production tradeoff reflection:** For a production deployment, I would weigh several tradeoffs. all-MiniLM-L6-v2 is fast and free but has a 256-token context limit, which is fine for short reviews but would truncate longer documents. A model like text-embedding-3-small (OpenAI) or voyage-large-2 offers higher accuracy on domain-specific text and longer context windows, but introduces API cost and latency. If FIU had international students writing reviews in Spanish or Creole, multilingual support (e.g. paraphrase-multilingual-MiniLM-L12-v2) would become a priority. For this project, all-MiniLM-L6-v2 is the right choice: it is accurate enough for short English review text, runs locally with no cost or rate limits, and keeps the pipeline simple.
 
@@ -77,9 +66,9 @@ retrieve much more accurately.
 
 ## Anticipated Challenges
 
-1. **Chunk boundary splitting reviews:** Because reviews vary in length, some longer reviews may be split across two chunks. If the key opinion (e.g. "avoid at all costs") lands at the end of a review that starts in a previous chunk, retrieval may return only the second half without enough context for the LLM to generate a good answer. The 50-character overlap is designed to mitigate this but may not fully solve it for very long reviews.
+1. **Professor name variations and misspellings:** Some professor names are long or unusual (e.g. Nonnarit O-Larnnithipong). If a user query uses a nickname, partial name, or misspelling that doesn't match the PROFESSOR_FILES dictionary in retrieve.py, the professor name detection will fail to filter correctly and may return results from other professors instead. This is a known limitation — the system only recognizes exact name matches from a predefined list, not fuzzy or partial matches.
 
-2. **Professor name variations and typos:** Some professor names are long or unusual (e.g. Nonnarit O-Larnnithipong). If a user query uses a nickname, partial name, or misspelling, the embedding model may not match it to the correct document chunks. This is a known limitation of semantic search on proper nouns — the model treats them as tokens rather than understanding they refer to a person.
+2. **Semantic mismatch on broad queries:** For broad comparison questions like "who is the best professor among all departments?", distance scores tend to be high (0.93–1.17) because no single review says "I am the best professor among all departments." The embedding model struggles to find a close semantic match for abstract comparison queries, which is expected behavior for short review-based corpora.
 
 ---
 
@@ -95,8 +84,8 @@ retrieve much more accurately.
            v
 ┌─────────────────────┐
 │  Chunking            │  <- Python (chunk.py)
-│  500 char chunks     │     Custom sliding window
-│  50 char overlap     │
+│  One review/chunk    │     Natural boundary split
+│  No overlap          │
 └──────────┬──────────┘
            │
            v
@@ -109,7 +98,7 @@ retrieve much more accurately.
            v
 ┌─────────────────────┐
 │  Retrieval           │  <- ChromaDB query (retrieve.py)
-│  Top-k = 5           │     Semantic similarity search
+│  Top-k = 5 to 50     │     Semantic + name/dept filter
 │  + source metadata   │
 └──────────┬──────────┘
            │
@@ -128,19 +117,15 @@ retrieve much more accurately.
 └─────────────────────┘
 ```
 
-Mermaid Generated Diagram:|
-
-![Pipeline Architecture](images/architecture.png)
-
 ---
 
 ## AI Tool Plan
 
 **Milestone 3 — Ingestion and chunking:**
-I will give Claude my Chunking Strategy section and Documents section from this planning.md, along with the structure of my .txt files (header block + REVIEW N format). I will ask Claude to implement ingest.py (loads all .txt files from the documents/ folder, extracts clean text) and chunk.py (splits text into 500-character chunks with 50-character overlap, attaches source filename as metadata). I will verify the output by printing 5 sample chunks and confirming each is readable, self-contained, and tagged with the correct source filename.
+I will give Claude my Chunking Strategy section and Documents section from this planning.md, along with the structure of my .txt files (header block + REVIEW N format). I will ask Claude to implement ingest.py (loads all .txt files from the documents/ folder, extracts clean text) and chunk.py (extracts each individual review as its own chunk using REVIEW N markers as natural split points, prepends professor context to every chunk). I will verify the output by printing 5 sample chunks and confirming each is readable, self-contained, and tagged with the correct source filename.
 
 **Milestone 4 — Embedding and retrieval:**
-I will give Claude my Retrieval Approach section and the architecture diagram, and ask it to implement embed.py (embeds all chunks using all-MiniLM-L6-v2 and stores them in ChromaDB with source metadata) and retrieve.py (accepts a query string, returns top-5 most relevant chunks with source names and distance scores). I will verify by running 3 of my evaluation plan questions and confirming the returned chunks are visibly relevant.
+I will give Claude my Retrieval Approach section and the architecture diagram, and ask it to implement embed.py (embeds all chunks using all-MiniLM-L6-v2 and stores them in ChromaDB with source metadata) and retrieve.py (accepts a query string, detects professor names and department keywords, filters results accordingly, returns top relevant chunks with source names and distance scores). I will verify by running 3 of my evaluation plan questions and confirming the returned chunks are visibly relevant.
 
 **Milestone 5 — Generation and interface:**
 I will give Claude my grounding requirement (answer only from retrieved context, cite sources), the Groq model name (llama-3.3-70b-versatile), and my architecture diagram, and ask it to implement generate.py (calls Groq with a grounded prompt template) and app.py (Gradio UI with question input, answer output, and sources display). I will verify grounding by asking a question my documents don't cover and confirming the system declines to answer rather than hallucinating.
