@@ -27,7 +27,7 @@ def chunk_documents(documents):
     Takes a list of document dicts (from ingest.py).
     Extracts individual reviews from each document and
     treats each review as its own chunk, tagged with
-    the professor name and source filename.
+    the professor name, review number, and source filename.
 
     Returns a flat list of chunk dicts, each containing:
       - 'text': the review content with professor context
@@ -37,7 +37,7 @@ def chunk_documents(documents):
     all_chunks = []
 
     for doc in documents:
-        # Extract professor name from header for context
+        # Extract professor info from header for context
         name_match = re.search(r'Professor:\s*(.+)', doc["text"])
         dept_match = re.search(r'Department:\s*(.+)', doc["text"])
         rating_match = re.search(r'Overall Rating:\s*(.+)', doc["text"])
@@ -50,12 +50,12 @@ def chunk_documents(documents):
         reviews = extract_reviews(doc["text"])
 
         for i, review in enumerate(reviews):
-            # Prepend professor context to every review chunk
-            # This ensures every chunk knows WHO it's about
+            # Prepend professor context + review number to every chunk
             chunk_text = (
                 f"Professor: {professor_name} | "
                 f"Department: {department} | "
-                f"Overall Rating: {overall_rating}\n"
+                f"Overall Rating: {overall_rating} | "
+                f"Review #{i+1}\n"
                 f"{review}"
             )
 

@@ -35,9 +35,10 @@ Your job is to answer questions about professors and courses using ONLY the stud
 STRICT RULES you must follow:
 1. Answer ONLY using information from the provided documents. Do not use any outside knowledge.
 2. If the documents do not contain enough information to answer the question, say exactly: "I don't have enough information in my documents to answer that question."
-3. Always cite which professor and source document your answer comes from.
+3. Reference which document number your information comes from (e.g. Document 1, Document 2).
 4. Be honest — if reviews are mixed, reflect that in your answer.
-5. Never make up or assume information not present in the documents."""
+5. Never make up or assume information not present in the documents.
+6. Do NOT add a Sources line at the end — sources will be added automatically."""
 
     # User prompt — contains the retrieved context and the question
     user_prompt = f"""Here are the relevant student reviews I found:
@@ -47,10 +48,7 @@ STRICT RULES you must follow:
 ---
 
 Based ONLY on the student reviews above, please answer this question:
-{query}
-
-At the end of your answer, list the sources you used like this:
-Sources: [filename1, filename2, ...]"""
+{query}"""
 
     return system_prompt, user_prompt
 
@@ -65,7 +63,7 @@ def ask(query):
 
     Returns a dict with:
       - 'answer': the LLM's grounded response
-      - 'sources': list of source filenames used
+      - 'sources': list of source filenames actually used in the answer
       - 'chunks': the raw retrieved chunks (for debugging)
     """
 
@@ -89,8 +87,21 @@ def ask(query):
     # Step 4: Extract the answer
     answer = response.choices[0].message.content
 
-    # Step 5: Collect unique sources from retrieved chunks
-    sources = list(set(chunk["source"] for chunk in chunks))
+    # Step 5: Handle sources smartly
+    # If the system declined to answer, show no sources
+    if "I don't have enough information" in answer:
+        sources = []
+    else:
+        # Only list sources the LLM actually referenced by document number
+        sources = []
+        for i, chunk in enumerate(chunks):
+            source = chunk["source"]
+            if f"Document {i+1}" in answer and source not in sources:
+                sources.append(source)
+
+        # Fallback: if no document references found, list all retrieved sources
+        if not sources:
+            sources = list(set(chunk["source"] for chunk in chunks))
 
     return {
         "answer": answer,
@@ -115,7 +126,10 @@ if __name__ == "__main__":
         result = ask(query)
 
         print(f"Answer:\n{result['answer']}")
-        print(f"\nSources used: {result['sources']}")
+        if result['sources']:
+            print(f"\nSources: {', '.join(result['sources'])}")
+        else:
+            print("\nSources: None — question was out of scope")
         print("=" * 60)
 
     # Test out-of-scope query — system should decline to answer
@@ -123,5 +137,8 @@ if __name__ == "__main__":
     print("=" * 60)
     out_of_scope = ask("What is the best restaurant near FIU campus?")
     print(f"Answer:\n{out_of_scope['answer']}")
-    print(f"\nSources used: {out_of_scope['sources']}")
+    if out_of_scope['sources']:
+        print(f"\nSources: {', '.join(out_of_scope['sources'])}")
+    else:
+        print("\nSources: None — question was out of scope")
     print("=" * 60)
