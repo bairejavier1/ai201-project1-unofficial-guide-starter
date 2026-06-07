@@ -32,13 +32,24 @@ This system covers student-generated reviews of professors at Florida Internatio
 
 ## Chunking Strategy
 
-**Chunk size:** 400 characters
+**Chunk size:** One complete review per chunk
 
-**Overlap:** 50 characters
+**Overlap:** None — natural review boundaries are used instead of 
+a sliding window. Each REVIEW block in the source document is 
+extracted as its own chunk, so no overlap is needed because 
+reviews don't share content.
 
-**Reasoning:** Each document consists of short, individual student reviews — typically 2 to 5 sentences long. After testing, 500-character chunks produced only 49 chunks total across 10 documents, which is below the recommended minimum of 50. Reducing to 400 characters produced 62 chunks, giving the retrieval system more granular units to match against. A 400-character chunk is still large enough to contain one complete review with its metadata (Quality, Difficulty, Course). A 50-character overlap ensures that reviews straddling a chunk boundary still appear fully in at least one retrievable chunk.
+**Reasoning:** Initially a 400-character sliding window with 
+50-character overlap was planned, producing 62 chunks. After 
+testing, retrieval quality was poor because the professor header 
+block consumed most of each chunk. The strategy was changed to 
+extract each individual review as its own chunk using the REVIEW N 
+markers as natural split points, with a short professor context 
+line (name, department, overall rating) prepended to every chunk. 
+This produces cleaner, more semantically meaningful chunks that 
+retrieve much more accurately.
 
-**Final chunk count:** 62
+**Final chunk count:** 50 (5 reviews × 10 professors)
 
 ---
 

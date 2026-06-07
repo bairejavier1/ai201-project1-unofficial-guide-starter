@@ -22,7 +22,7 @@ def extract_reviews(text):
     return reviews
 
 
-def chunk_documents(documents, chunk_size=400, overlap=50):
+def chunk_documents(documents):
     """
     Takes a list of document dicts (from ingest.py).
     Extracts individual reviews from each document and
